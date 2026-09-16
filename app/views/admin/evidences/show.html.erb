@@ -1,0 +1,44 @@
+<header class="page-header evidence-heading">
+  <div><p class="eyebrow">Evidencia digital</p><h1><%= @evidence.code %></h1><p class="lead"><%= @evidence.name %></p></div>
+  <%= link_to "Editar datos", edit_admin_evidence_path(@evidence), class: "button secondary" %>
+</header>
+<section class="detail-grid">
+  <article class="panel">
+    <h2>Información de la evidencia</h2>
+    <dl class="details">
+      <div><dt>Caso</dt><dd><%= link_to @evidence.case.code, admin_case_path(@evidence.case) %></dd></div>
+      <div><dt>Tipo</dt><dd><%= @evidence.evidence_type.name %></dd></div>
+      <div><dt>Estado</dt><dd><span class="badge <%= @evidence.status %>"><%= human_status(@evidence.status) %></span></dd></div>
+      <div><dt>Ubicación</dt><dd><%= @evidence.location.presence || "—" %></dd></div>
+      <div><dt>Fecha de recolección</dt><dd><%= format_datetime(@evidence.collected_at) %></dd></div>
+      <div class="wide"><dt>Descripción</dt><dd><%= @evidence.description.presence || "Sin descripción" %></dd></div>
+    </dl>
+  </article>
+  <article class="custodian-card">
+    <p class="eyebrow">Custodio actual</p>
+    <div class="avatar"><%= @evidence.current_custodian.name.split.map { |part| part.first }.join.first(2) %></div>
+    <h2><%= @evidence.current_custodian.name %></h2>
+    <p><%= @evidence.current_custodian.email %></p>
+    <%= link_to "Transferir custodia", new_admin_evidence_transfer_path(@evidence), class: "button accent full" %>
+  </article>
+</section>
+<section class="panel timeline-panel">
+  <div class="panel-header"><div><p class="eyebrow">Registro auditable</p><h2>Cadena de custodia</h2></div></div>
+  <div class="timeline">
+    <% @movements.each do |movement| %>
+      <article class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content">
+          <time><%= format_datetime(movement.transferred_at) %></time>
+          <h3><%= movement.reason %></h3>
+          <div class="movement-grid">
+            <div><span>Origen</span><strong><%= movement.from_user&.name || "—" %></strong></div>
+            <div><span>Destino</span><strong><%= movement.to_user.name %></strong></div>
+            <div><span>Realizado por</span><strong><%= movement.performed_by.name %></strong></div>
+          </div>
+          <% if movement.notes.present? %><p class="notes"><%= movement.notes %></p><% end %>
+        </div>
+      </article>
+    <% end %>
+  </div>
+</section>

@@ -1,0 +1,4 @@
+<header class="page-header"><div><p class="eyebrow">Inventario</p><h1>Evidencias</h1></div><%= link_to "Nueva evidencia", new_admin_evidence_path, class: "button primary" %></header>
+<section class="panel table-wrap"><table><thead><tr><th>Código</th><th>Nombre</th><th>Tipo</th><th>Caso</th><th>Custodio actual</th><th>Estado</th><th></th></tr></thead><tbody>
+  <% @evidences.each do |evidence| %><tr><td><strong><%= link_to evidence.code, admin_evidence_path(evidence) %></strong></td><td><%= evidence.name %></td><td><%= evidence.evidence_type.name %></td><td><%= evidence.case.code %></td><td><%= evidence.current_custodian.name %></td><td><span class="badge <%= evidence.status %>"><%= human_status(evidence.status) %></span></td><td class="actions"><%= link_to "Editar", edit_admin_evidence_path(evidence) %></td></tr><% end %>
+</tbody></table></section>

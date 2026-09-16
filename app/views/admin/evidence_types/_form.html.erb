@@ -1,0 +1,6 @@
+<%= render "admin/shared/errors", record: evidence_type %>
+<%= form_with model: [:admin, evidence_type], class: "stacked-form panel form-panel" do |form| %>
+  <div class="field"><%= form.label :name, "Nombre" %><%= form.text_field :name, required: true %></div>
+  <div class="field"><%= form.label :description, "Descripción" %><%= form.text_area :description, rows: 4 %></div>
+  <div class="form-actions"><%= form.submit class: "button primary" %><%= link_to "Cancelar", admin_evidence_types_path, class: "button secondary" %></div>
+<% end %>

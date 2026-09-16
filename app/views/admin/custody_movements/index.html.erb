@@ -1,0 +1,4 @@
+<header class="page-header"><div><p class="eyebrow">Auditoría</p><h1>Historial de custodia</h1></div></header>
+<section class="panel table-wrap"><table><thead><tr><th>Fecha</th><th>Evidencia</th><th>Origen</th><th>Destino</th><th>Motivo</th><th>Realizado por</th><th></th></tr></thead><tbody>
+  <% @movements.each do |movement| %><tr><td><%= format_datetime(movement.transferred_at) %></td><td><%= link_to movement.evidence.code, admin_evidence_path(movement.evidence) %></td><td><%= movement.from_user&.name || "—" %></td><td><%= movement.to_user.name %></td><td><%= movement.reason %></td><td><%= movement.performed_by.name %></td><td><%= link_to "Ver", admin_custody_movement_path(movement) %></td></tr><% end %>
+</tbody></table></section>

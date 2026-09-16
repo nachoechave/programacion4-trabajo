@@ -1,0 +1,12 @@
+<%= render "admin/shared/errors", record: user %>
+<%= form_with model: [:admin, user], class: "stacked-form panel form-panel" do |form| %>
+  <div class="form-grid">
+    <div class="field"><%= form.label :name, "Nombre" %><%= form.text_field :name, required: true %></div>
+    <div class="field"><%= form.label :email, "Email" %><%= form.email_field :email, required: true %></div>
+    <div class="field"><%= form.label :role, "Rol" %><%= form.select :role, User.roles.keys.map { |role| [human_role(role), role] } %></div>
+    <div class="field checkbox-field"><%= form.check_box :active %><%= form.label :active, "Usuario activo" %></div>
+    <div class="field"><%= form.label :password, user.persisted? ? "Nueva contraseña (opcional)" : "Contraseña" %><%= form.password_field :password, required: !user.persisted? %></div>
+    <div class="field"><%= form.label :password_confirmation, "Confirmar contraseña" %><%= form.password_field :password_confirmation, required: !user.persisted? %></div>
+  </div>
+  <div class="form-actions"><%= form.submit class: "button primary" %><%= link_to "Cancelar", admin_users_path, class: "button secondary" %></div>
+<% end %>

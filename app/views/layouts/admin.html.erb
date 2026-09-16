@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <title><%= content_for(:title) || "Digital Custody" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag :app %>
+  </head>
+
+  <body>
+    <div class="app-shell">
+      <% if current_admin %>
+        <aside class="sidebar">
+          <div class="brand">
+            <span class="brand-mark">DC</span>
+            <div>
+              <strong>Digital Custody</strong>
+              <small>Cadena de custodia</small>
+            </div>
+          </div>
+          <nav>
+            <%= link_to "Dashboard", admin_root_path %>
+            <%= link_to "Casos", admin_cases_path %>
+            <%= link_to "Evidencias", admin_evidences_path %>
+            <%= link_to "Tipos de evidencia", admin_evidence_types_path %>
+            <%= link_to "Usuarios", admin_users_path %>
+            <%= link_to "Historial", admin_custody_movements_path %>
+          </nav>
+          <div class="sidebar-footer">
+            <span><%= current_admin.name %></span>
+            <%= button_to "Cerrar sesión", admin_logout_path, method: :delete, class: "link-button" %>
+          </div>
+        </aside>
+      <% end %>
+
+      <main class="main-content <%= "login-content" unless current_admin %>">
+        <% flash.each do |type, message| %>
+          <div class="flash <%= type %>"><%= message %></div>
+        <% end %>
+        <%= yield %>
+      </main>
+    </div>
+  </body>
+</html>

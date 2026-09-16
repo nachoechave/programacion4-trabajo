@@ -1,0 +1,17 @@
+<%= render "admin/shared/errors", record: evidence %>
+<%= form_with model: [:admin, evidence], class: "stacked-form panel form-panel" do |form| %>
+  <div class="form-grid">
+    <% unless evidence.persisted? %>
+      <div class="field"><%= form.label :code, "Código" %><%= form.text_field :code, required: true %></div>
+      <div class="field"><%= form.label :case_id, "Caso" %><%= form.collection_select :case_id, @cases, :id, :code, { prompt: "Seleccionar caso" }, required: true %></div>
+      <div class="field"><%= form.label :current_custodian_id, "Custodio inicial" %><%= form.collection_select :current_custodian_id, @custodians, :id, :name, { prompt: "Seleccionar custodio" }, required: true %></div>
+    <% end %>
+    <div class="field"><%= form.label :name, "Nombre" %><%= form.text_field :name, required: true %></div>
+    <div class="field"><%= form.label :evidence_type_id, "Tipo" %><%= form.collection_select :evidence_type_id, @evidence_types, :id, :name, { prompt: "Seleccionar tipo" }, required: true %></div>
+    <div class="field"><%= form.label :status, "Estado" %><%= form.select :status, Evidence.statuses.keys.map { |status| [human_status(status), status] } %></div>
+    <div class="field"><%= form.label :collected_at, "Fecha de recolección" %><%= form.datetime_local_field :collected_at, required: true %></div>
+    <div class="field"><%= form.label :location, "Ubicación" %><%= form.text_field :location %></div>
+  </div>
+  <div class="field"><%= form.label :description, "Descripción" %><%= form.text_area :description, rows: 4 %></div>
+  <div class="form-actions"><%= form.submit class: "button primary" %><%= link_to "Cancelar", admin_evidences_path, class: "button secondary" %></div>
+<% end %>

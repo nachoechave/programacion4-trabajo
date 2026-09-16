@@ -1,0 +1,4 @@
+<header class="page-header"><div><p class="eyebrow">Catálogo</p><h1>Tipos de evidencia</h1></div><%= link_to "Nuevo tipo", new_admin_evidence_type_path, class: "button primary" %></header>
+<section class="panel table-wrap"><table><thead><tr><th>Nombre</th><th>Descripción</th><th>Evidencias</th><th></th></tr></thead><tbody>
+  <% @evidence_types.each do |type| %><tr><td><strong><%= type.name %></strong></td><td><%= type.description.presence || "—" %></td><td><%= type.evidences.count %></td><td class="actions"><%= link_to "Ver", admin_evidence_type_path(type) %><%= link_to "Editar", edit_admin_evidence_type_path(type) %></td></tr><% end %>
+</tbody></table></section>

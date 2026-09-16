@@ -1,0 +1,9 @@
+<header class="page-header"><div><p class="eyebrow"><%= @evidence.code %></p><h1>Transferir custodia</h1><p class="lead"><%= @evidence.name %></p></div></header>
+<section class="transfer-summary"><div><span>Custodio actual</span><strong><%= @evidence.current_custodian.name %></strong></div><div><span>Caso</span><strong><%= @evidence.case.code %></strong></div></section>
+<% if @error %><div class="error-box"><%= @error %></div><% end %>
+<%= form_with url: admin_evidence_transfers_path(@evidence), scope: :transfer, class: "stacked-form panel form-panel" do |form| %>
+  <div class="field"><%= form.label :to_user_id, "Nuevo custodio" %><%= form.collection_select :to_user_id, @custodians, :id, :name, { prompt: "Seleccionar nuevo custodio" }, required: true %></div>
+  <div class="field"><%= form.label :reason, "Motivo" %><%= form.text_field :reason, required: true, placeholder: "Ej.: Traslado para análisis" %></div>
+  <div class="field"><%= form.label :notes, "Observaciones" %><%= form.text_area :notes, rows: 4 %></div>
+  <div class="form-actions"><%= form.submit "Confirmar transferencia", class: "button accent" %><%= link_to "Cancelar", admin_evidence_path(@evidence), class: "button secondary" %></div>
+<% end %>

@@ -1,0 +1,25 @@
+<% content_for :title, "Ingreso administrativo | Digital Custody" %>
+
+<section class="login-card">
+  <div class="brand login-brand">
+    <span class="brand-mark">DC</span>
+    <div>
+      <h1>Digital Custody</h1>
+      <p>Administración de evidencia digital</p>
+    </div>
+  </div>
+
+  <%= form_with url: admin_login_path, class: "stacked-form" do |form| %>
+    <div class="field">
+      <%= form.label :email, "Email" %>
+      <%= form.email_field :email, value: params[:email], required: true, autofocus: true %>
+    </div>
+    <div class="field">
+      <%= form.label :password, "Contraseña" %>
+      <%= form.password_field :password, required: true %>
+    </div>
+    <%= form.submit "Ingresar", class: "button primary full" %>
+  <% end %>
+
+  <p class="demo-hint">Demo: admin@example.com / password123</p>
+</section>

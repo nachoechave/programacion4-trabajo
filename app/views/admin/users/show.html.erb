@@ -1,0 +1,2 @@
+<header class="page-header"><div><p class="eyebrow">Usuario</p><h1><%= @user.name %></h1></div><%= link_to "Editar", edit_admin_user_path(@user), class: "button secondary" %></header>
+<section class="panel"><dl class="details"><div><dt>Email</dt><dd><%= @user.email %></dd></div><div><dt>Rol</dt><dd><%= human_role(@user.role) %></dd></div><div><dt>Estado</dt><dd><%= @user.active? ? "Activo" : "Inactivo" %></dd></div><div><dt>Evidencias a cargo</dt><dd><%= @user.custodied_evidences.count %></dd></div></dl></section>

@@ -1,0 +1,22 @@
+<% content_for :title, "Casos | Digital Custody" %>
+<header class="page-header">
+  <div><p class="eyebrow">Investigaciones</p><h1>Casos</h1></div>
+  <%= link_to "Nuevo caso", new_admin_case_path, class: "button primary" %>
+</header>
+<section class="panel table-wrap">
+  <table>
+    <thead><tr><th>Código</th><th>Título</th><th>Estado</th><th>Apertura</th><th>Evidencias</th><th></th></tr></thead>
+    <tbody>
+      <% @cases.each do |case_record| %>
+        <tr>
+          <td><strong><%= case_record.code %></strong></td>
+          <td><%= case_record.title %></td>
+          <td><span class="badge <%= case_record.status %>"><%= human_status(case_record.status) %></span></td>
+          <td><%= format_datetime(case_record.opened_at) %></td>
+          <td><%= case_record.evidences.size %></td>
+          <td class="actions"><%= link_to "Ver", admin_case_path(case_record) %><%= link_to "Editar", edit_admin_case_path(case_record) %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</section>

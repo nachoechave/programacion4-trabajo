@@ -1,0 +1,18 @@
+<%= render "admin/shared/errors", record: case_record %>
+<%= form_with model: [:admin, case_record], class: "stacked-form panel form-panel" do |form| %>
+  <div class="form-grid">
+    <div class="field"><%= form.label :code, "Código" %><%= form.text_field :code, required: true %></div>
+    <div class="field"><%= form.label :title, "Título" %><%= form.text_field :title, required: true %></div>
+    <div class="field"><%= form.label :status, "Estado" %><%= form.select :status, Case.statuses.keys.map { |value| [human_status(value), value] } %></div>
+    <div class="field"><%= form.label :opened_at, "Fecha de apertura" %><%= form.datetime_local_field :opened_at, required: true %></div>
+    <div class="field"><%= form.label :closed_at, "Fecha de cierre" %><%= form.datetime_local_field :closed_at %></div>
+  </div>
+  <div class="field"><%= form.label :description, "Descripción" %><%= form.text_area :description, rows: 4 %></div>
+  <fieldset class="checkbox-group">
+    <legend>Analistas asignados</legend>
+    <%= form.collection_check_boxes :analyst_ids, @analysts, :id, :name do |box| %>
+      <label><%= box.check_box %><span><%= box.text %></span></label>
+    <% end %>
+  </fieldset>
+  <div class="form-actions"><%= form.submit class: "button primary" %><%= link_to "Cancelar", admin_cases_path, class: "button secondary" %></div>
+<% end %>
