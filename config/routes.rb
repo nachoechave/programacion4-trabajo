@@ -13,6 +13,7 @@ Rails.application.routes.draw do
     resources :evidences, except: :destroy do
       member do
         get :report
+        get :pdf
       end
       resources :transfers, only: %i[new create]
     end
