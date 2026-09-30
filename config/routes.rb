@@ -22,7 +22,7 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :cases, only: %i[index show]
+      resources :cases, only: %i[index show create]
       resources :evidences, only: %i[index show] do
         resources :custody_movements, only: :index
       end
