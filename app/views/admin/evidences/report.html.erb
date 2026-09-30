@@ -1,0 +1,61 @@
+<header class="page-header">
+  <div>
+    <p class="eyebrow">Informe de evidencia</p>
+    <h1><%= @evidence.code %> - <%= @evidence.name %></h1>
+  </div>
+  <div class="report-actions">
+    <%= link_to "Volver", admin_evidence_path(@evidence), class: "button secondary" %>
+    <button type="button" class="button accent" onclick="window.print()">Imprimir / Guardar PDF</button>
+  </div>
+</header>
+
+<section class="panel">
+  <h2>Datos generales</h2>
+  <dl class="details">
+    <div><dt>Caso</dt><dd><%= @evidence.case.code %> - <%= @evidence.case.title %></dd></div>
+    <div><dt>Tipo</dt><dd><%= @evidence.evidence_type.name %></dd></div>
+    <div><dt>Estado</dt><dd><%= human_status(@evidence.status) %></dd></div>
+    <div><dt>Custodio actual</dt><dd><%= @evidence.current_custodian.name %></dd></div>
+    <div><dt>Ubicación</dt><dd><%= @evidence.location.presence || "—" %></dd></div>
+    <div><dt>Fecha de recolección</dt><dd><%= format_datetime(@evidence.collected_at) %></dd></div>
+    <div class="wide"><dt>Descripción</dt><dd><%= @evidence.description.presence || "Sin descripción" %></dd></div>
+  </dl>
+</section>
+
+<section class="panel">
+  <h2>Cadena de custodia</h2>
+  <% if @movements.any? %>
+    <table>
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th>Origen</th>
+          <th>Destino</th>
+          <th>Realizado por</th>
+          <th>Motivo</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @movements.each do |movement| %>
+          <tr>
+            <td><%= format_datetime(movement.transferred_at) %></td>
+            <td><%= movement.from_user&.name || "—" %></td>
+            <td><%= movement.to_user.name %></td>
+            <td><%= movement.performed_by.name %></td>
+            <td><%= movement.reason %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  <% else %>
+    <p>No hay movimientos de custodia registrados.</p>
+  <% end %>
+</section>
+
+<style>
+  @media print {
+    nav, .sidebar, .report-actions, .flash { display: none !important; }
+    body { background: white !important; }
+    .panel { box-shadow: none !important; border: 1px solid #ddd; break-inside: avoid; }
+  }
+</style>
