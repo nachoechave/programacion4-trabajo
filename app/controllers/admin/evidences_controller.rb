@@ -1,6 +1,6 @@
 module Admin
   class EvidencesController < BaseController
-    before_action :set_evidence, only: %i[show edit update]
+    before_action :set_evidence, only: %i[show edit update report]
     before_action :load_form_options, only: %i[new create edit update]
 
     def index
@@ -8,9 +8,11 @@ module Admin
     end
 
     def show
-      @movements = @evidence.custody_movements
-                            .includes(:from_user, :to_user, :performed_by)
-                            .order(:transferred_at, :id)
+      @movements = custody_movements
+    end
+
+    def report
+      @movements = custody_movements
     end
 
     def new
@@ -40,6 +42,12 @@ module Admin
 
     def set_evidence
       @evidence = Evidence.find(params[:id])
+    end
+
+    def custody_movements
+      @evidence.custody_movements
+               .includes(:from_user, :to_user, :performed_by)
+               .order(:transferred_at, :id)
     end
 
     def load_form_options

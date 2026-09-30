@@ -1,6 +1,9 @@
 <header class="page-header evidence-heading">
   <div><p class="eyebrow">Evidencia digital</p><h1><%= @evidence.code %></h1><p class="lead"><%= @evidence.name %></p></div>
-  <%= link_to "Editar datos", edit_admin_evidence_path(@evidence), class: "button secondary" %>
+  <div class="report-actions">
+    <%= link_to "Exportar informe", report_admin_evidence_path(@evidence), class: "button accent" %>
+    <%= link_to "Editar datos", edit_admin_evidence_path(@evidence), class: "button secondary" %>
+  </div>
 </header>
 <section class="detail-grid">
   <article class="panel">
