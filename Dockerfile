@@ -15,7 +15,11 @@ ENV RAILS_ENV=production \
     RAILS_LOG_TO_STDOUT=1
 
 RUN SECRET_KEY_BASE_DUMMY=1 \
-    DATABASE_URL=postgresql://localhost/digital_custody_build \
+    DB_HOST=localhost \
+    DB_PORT=5432 \
+    DB_NAME=digital_custody_build \
+    DB_USER=postgres \
+    DB_PASSWORD=postgres \
     bundle exec rails assets:precompile
 
 EXPOSE 3000
