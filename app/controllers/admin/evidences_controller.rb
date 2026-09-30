@@ -1,6 +1,6 @@
 module Admin
   class EvidencesController < BaseController
-    before_action :set_evidence, only: %i[show edit update report]
+    before_action :set_evidence, only: %i[show edit update report pdf]
     before_action :load_form_options, only: %i[new create edit update]
 
     def index
@@ -13,6 +13,16 @@ module Admin
 
     def report
       @movements = custody_movements
+    end
+
+    def pdf
+      movements = custody_movements
+      document = EvidencePdfReport.new(evidence: @evidence, movements:).render
+
+      send_data document,
+                filename: "#{@evidence.code}-informe.pdf",
+                type: "application/pdf",
+                disposition: "attachment"
     end
 
     def new

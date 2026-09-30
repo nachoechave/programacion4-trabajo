@@ -5,7 +5,8 @@
   </div>
   <div class="report-actions">
     <%= link_to "Volver", admin_evidence_path(@evidence), class: "button secondary" %>
-    <button type="button" class="button accent" onclick="window.print()">Imprimir / Guardar PDF</button>
+    <%= link_to "Descargar PDF", pdf_admin_evidence_path(@evidence), class: "button accent" %>
+    <button type="button" class="button secondary" onclick="window.print()">Imprimir</button>
   </div>
 </header>
 
