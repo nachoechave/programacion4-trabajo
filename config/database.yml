@@ -25,9 +25,12 @@ test:
   <<: *default
   database: digital_custody_test
 
-# En producción se usa una única variable DATABASE_URL.
-# Ejemplo:
-# postgresql://digital_custody:CLAVE@127.0.0.1/digital_custody_production
+# En producción usamos variables separadas para evitar el parser estricto de URI
+# con nombres internos de EasyPanel que contienen guiones bajos.
 production:
   <<: *default
-  url: <%= ENV.fetch("DATABASE_URL") %>
+  host: <%= ENV.fetch("DB_HOST") %>
+  port: <%= ENV.fetch("DB_PORT", 5432) %>
+  database: <%= ENV.fetch("DB_NAME") %>
+  username: <%= ENV.fetch("DB_USER") %>
+  password: <%= ENV.fetch("DB_PASSWORD") %>
