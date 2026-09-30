@@ -1,0 +1,8 @@
+.git
+log/*
+tmp/*
+!.keep
+storage/*
+.env
+.env.*
+config/master.key
