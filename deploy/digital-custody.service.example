@@ -1,0 +1,15 @@
+[Unit]
+Description=Digital Custody Rails
+After=network.target postgresql.service
+
+[Service]
+Type=simple
+User=deploy
+WorkingDirectory=/var/www/digital-custody
+EnvironmentFile=/etc/digital-custody.env
+ExecStart=/usr/bin/env bundle exec puma -C config/puma.rb
+Restart=always
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
