@@ -16,6 +16,24 @@ module Api
           }
         )
       end
+
+      def create
+        case_record = Case.new(case_params)
+
+        if case_record.save
+          render json: case_record.as_json(
+            only: %i[id code title description status opened_at closed_at]
+          ), status: :created
+        else
+          render json: { errors: case_record.errors.full_messages }, status: :unprocessable_entity
+        end
+      end
+
+      private
+
+      def case_params
+        params.require(:case).permit(:code, :title, :description, :status, :opened_at, :closed_at)
+      end
     end
   end
 end
