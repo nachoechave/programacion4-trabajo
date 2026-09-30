@@ -11,6 +11,9 @@ Rails.application.routes.draw do
     resources :evidence_types
     resources :users, except: :destroy
     resources :evidences, except: :destroy do
+      member do
+        get :report
+      end
       resources :transfers, only: %i[new create]
     end
     resources :custody_movements, only: %i[index show]
@@ -19,7 +22,9 @@ Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
       resources :cases, only: %i[index show]
-      resources :evidences, only: %i[index show]
+      resources :evidences, only: %i[index show] do
+        resources :custody_movements, only: :index
+      end
     end
   end
 
