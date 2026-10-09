@@ -29,6 +29,8 @@ class EvidenceTransferService
       )
     end
 
+    CustodyMailer.transferred(evidence: evidence, recipient: to_user).deliver_later if ENV["SMTP_ADDRESS"].present?
+
     evidence
   end
 
