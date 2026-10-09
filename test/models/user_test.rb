@@ -9,8 +9,8 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "email is unique regardless of capitalization" do
-    User.create!(name: "Juan", email: "juan@example.com", password: "password123", role: :analyst)
-    duplicate = User.new(name: "Otro Juan", email: "JUAN@example.com", password: "password123", role: :analyst)
+    User.create!(name: "Juan", email: "unique-user-test@example.com", password: "password123", role: :analyst)
+    duplicate = User.new(name: "Otro Juan", email: "UNIQUE-USER-TEST@example.com", password: "password123", role: :analyst)
 
     assert_not duplicate.valid?
     assert duplicate.errors[:email].any?

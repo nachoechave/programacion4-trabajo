@@ -32,3 +32,7 @@ Thumbs.db
 
 # Ignore key files for decrypting credentials and more.
 /config/*.key
+
+# Active Storage local persistence
+/storage/*
+!/storage/.keep

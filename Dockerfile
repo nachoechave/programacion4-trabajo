@@ -1,4 +1,4 @@
-FROM ruby:3.2.3-slim
+FROM ruby:3.3.12-slim
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libpq-dev libyaml-dev && \
@@ -24,4 +24,4 @@ RUN SECRET_KEY_BASE_DUMMY=1 \
 
 EXPOSE 3000
 
-CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0", "-p", "3000"]
+CMD ["sh", "-c", "bundle exec rails db:prepare && exec bundle exec rails server -b 0.0.0.0 -p 3000"]

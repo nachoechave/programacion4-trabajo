@@ -15,6 +15,7 @@
       <div><dt>Ubicación</dt><dd><%= @evidence.location.presence || "—" %></dd></div>
       <div><dt>Fecha de recolección</dt><dd><%= format_datetime(@evidence.collected_at) %></dd></div>
       <div class="wide"><dt>Descripción</dt><dd><%= @evidence.description.presence || "Sin descripción" %></dd></div>
+      <div class="wide"><dt>Archivos adjuntos</dt><dd><% if @evidence.files.attached? %><% @evidence.files.each do |file| %><p><%= link_to file.filename.to_s, rails_blob_path(file, disposition: "attachment") %></p><% end %><% else %>Sin archivos<% end %></dd></div>
     </dl>
   </article>
   <article class="custodian-card">

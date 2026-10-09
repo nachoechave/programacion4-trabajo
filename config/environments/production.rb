@@ -18,6 +18,7 @@ Rails.application.configure do
   config.active_support.report_deprecations = false
   config.i18n.fallbacks = true
   config.active_record.dump_schema_after_migration = false
+  config.active_storage.service = :local
   config.active_record.attributes_for_inspect = [ :id ]
 
   # En el servidor se configura APP_HOST con el subdominio temporal.

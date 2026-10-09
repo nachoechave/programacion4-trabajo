@@ -1,3 +1,4 @@
+unless Rails.env.production? && ENV["ALLOW_DEMO_SEEDS"] != "true"
 admin = User.find_or_initialize_by(email: "admin@example.com")
 admin.update!(
   name: "Administrador",
@@ -123,3 +124,5 @@ register_evidence.call(
 
 puts "Datos de demostración preparados."
 puts "Administrador: admin@example.com / password123"
+
+end
