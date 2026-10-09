@@ -28,7 +28,8 @@ bundle exec rails console
 Crear el usuario con un email real y una contraseña robusta, sin colocar la contraseña en Git ni en el historial de comandos:
 
 ```ruby
-password = STDIN.gets&.chomp
+require "io/console"
+password = STDIN.noecho(&:gets).chomp
 User.create!(name: "Administrador", email: "admin@tu-dominio", password: password, role: :admin, active: true)
 ```
 
