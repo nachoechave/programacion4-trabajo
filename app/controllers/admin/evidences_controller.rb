@@ -69,7 +69,7 @@ module Admin
     def create_params
       params.require(:evidence).permit(
         :code, :name, :description, :case_id, :evidence_type_id,
-        :current_custodian_id, :status, :collected_at, :location
+        :current_custodian_id, :status, :collected_at, :location, files: []
       )
     end
 
