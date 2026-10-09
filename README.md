@@ -87,7 +87,7 @@ Estas credenciales son únicamente para desarrollo y demostración.
 | `/api/v1/cases` | Consulta JSON de casos |
 | `/api/v1/evidences` | Consulta JSON de evidencias |
 
-La API del checkpoint es pública y de solo lectura. Está pendiente implementar autenticación mediante token antes de la entrega final.
+La API requiere autenticación mediante Bearer token. Se obtiene con `POST /api/v1/login` enviando `email` y `password` en JSON. El token vence a las 24 horas y se revoca con `DELETE /api/v1/logout`. La creación de casos por API requiere rol administrador.
 
 ## Testing
 
@@ -114,12 +114,7 @@ Implementado:
 
 Pendiente:
 
-- autenticación mediante token para la API;
-- Active Storage;
-- Action Mailer;
-- RuboCop;
-- Brakeman;
-- deploy;
-- tests adicionales.
+- deploy en Easypanel y verificación de persistencia con volumen, según `docs/DEPLOY_EASYPANEL.md`;
+- validación final del CI y la instancia publicada.
 
-El proyecto fue creado inicialmente omitiendo Active Storage, Action Mailer, RuboCop y Brakeman para agilizar la primera etapa. Estos requisitos se incorporarán antes de la entrega final.
+La rama de finalización incorpora autenticación por token, adjuntos de Active Storage, Action Mailer para transferencias cuando se configure SMTP, análisis RuboCop/Brakeman en CI y tests nuevos. El deploy operativo requiere credenciales e infraestructura externa y no se declara realizado hasta su verificación.
