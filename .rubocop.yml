@@ -3,3 +3,8 @@ AllCops:
   Exclude:
     - db/schema.rb
     - vendor/**/*
+
+# Los scripts generados en Windows/WSL no conservan el bit ejecutable en Git.
+Lint/ScriptPermission:
+  Exclude:
+    - bin/*
