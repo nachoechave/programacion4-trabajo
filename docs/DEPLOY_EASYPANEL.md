@@ -16,3 +16,20 @@ La configuración SMTP es opcional: SMTP_ADDRESS, SMTP_PORT, SMTP_USERNAME, SMTP
 No ejecutar db:seed automáticamente en producción: incorpora cuentas de demostración con claves conocidas. No publicar secretos ni conectar el sistema a la base de datos de ComercioFlex.
 
 El código de esta rama no representa un despliegue real. Para compartir la URL pública, primero hay que completar la configuración de Easypanel y comprobar los servicios.
+
+## Primer administrador de producción
+
+Los datos demo se bloquean en producción. Después de crear la base, abrir una consola dentro del contenedor de Digital Custody:
+
+```bash
+bundle exec rails console
+```
+
+Crear el usuario con un email real y una contraseña robusta, sin colocar la contraseña en Git ni en el historial de comandos:
+
+```ruby
+password = STDIN.gets&.chomp
+User.create!(name: "Administrador", email: "admin@tu-dominio", password: password, role: :admin, active: true)
+```
+
+No reutilizar las cuentas de demostración de desarrollo. Comprobar el inicio de sesión, y mantener secretos y backups fuera del repositorio.
