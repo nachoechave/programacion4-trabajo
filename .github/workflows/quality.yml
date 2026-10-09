@@ -23,6 +23,11 @@ jobs:
       PGHOST: localhost
       PGUSER: postgres
       PGPASSWORD: postgres
+      DB_HOST: localhost
+      DB_PORT: '5432'
+      DB_NAME: digital_custody_test
+      DB_USER: postgres
+      DB_PASSWORD: postgres
     steps:
       - uses: actions/checkout@v4
       - uses: ruby/setup-ruby@v1
