@@ -2,6 +2,7 @@ module Api
   module V1
     class CasesController < BaseController
       before_action :require_api_admin!, only: :create
+      before_action :require_api_admin!, only: :create
 
       def index
         cases = Case.order(opened_at: :desc)
