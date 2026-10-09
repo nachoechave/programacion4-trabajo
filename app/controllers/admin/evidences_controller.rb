@@ -75,7 +75,7 @@ module Admin
 
     def update_params
       params.require(:evidence).permit(
-        :name, :description, :evidence_type_id, :status, :collected_at, :location
+        :name, :description, :evidence_type_id, :status, :collected_at, :location, files: []
       )
     end
   end
