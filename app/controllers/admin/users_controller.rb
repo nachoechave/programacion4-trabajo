@@ -42,7 +42,13 @@ module Admin
     end
 
     def user_params
-      params.require(:user).permit(:name, :email, :role, :active, :password, :password_confirmation)
+      attributes = params.require(:user).permit(:name, :email, :password, :password_confirmation)
+      requested_role = params[:user][:role]
+      attributes[:role] = requested_role if User.roles.key?(requested_role)
+      if params[:user].key?(:active)
+        attributes[:active] = ActiveModel::Type::Boolean.new.cast(params[:user][:active])
+      end
+      attributes
     end
   end
 end
