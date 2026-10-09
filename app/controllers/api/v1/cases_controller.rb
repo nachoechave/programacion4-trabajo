@@ -1,6 +1,8 @@
 module Api
   module V1
     class CasesController < BaseController
+      before_action :require_api_admin!, only: :create
+
       def index
         cases = Case.order(opened_at: :desc)
         render json: cases.as_json(only: %i[id code title description status opened_at closed_at])
