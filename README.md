@@ -12,7 +12,7 @@ Es una aplicación monolítica de Ruby on Rails. El back-office utiliza controla
 
 ## Tecnologías
 
-- Ruby 3.2.3
+- Ruby 3.3.12
 - Ruby on Rails 8.1.3.1
 - PostgreSQL 16
 - Active Record
