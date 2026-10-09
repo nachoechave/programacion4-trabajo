@@ -6,7 +6,6 @@ class Evidence < ApplicationRecord
   belongs_to :current_custodian, class_name: "User", inverse_of: :custodied_evidences
   has_many :custody_movements, dependent: :restrict_with_error
   has_many_attached :files
-  has_many_attached :files
 
   validates :code, :name, :collected_at, presence: true
   validates :code, uniqueness: true
