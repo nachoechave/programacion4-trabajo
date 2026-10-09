@@ -22,6 +22,8 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
+      post "login", to: "sessions#create"
+      delete "logout", to: "sessions#destroy"
       resources :cases, only: %i[index show create]
       resources :evidences, only: %i[index show] do
         resources :custody_movements, only: :index
