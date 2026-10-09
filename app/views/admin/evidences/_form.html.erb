@@ -13,5 +13,6 @@
     <div class="field"><%= form.label :location, "Ubicación" %><%= form.text_field :location %></div>
   </div>
   <div class="field"><%= form.label :description, "Descripción" %><%= form.text_area :description, rows: 4 %></div>
+  <div class="field"><%= form.label :files, "Archivos adjuntos" %><%= form.file_field :files, multiple: true %></div>
   <div class="form-actions"><%= form.submit class: "button primary" %><%= link_to "Cancelar", admin_evidences_path, class: "button secondary" %></div>
 <% end %>
