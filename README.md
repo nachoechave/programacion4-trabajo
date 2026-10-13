@@ -110,11 +110,20 @@ Implementado:
 - transferencia transaccional de evidencias;
 - seeds idempotentes para la demostración;
 - tests principales;
-- API JSON pública de consulta para casos y evidencias.
+- API JSON de consulta para casos y evidencias con autenticación Bearer.
 
-Pendiente:
+Funcionalidades incorporadas en la finalización:
 
-- deploy en Easypanel y verificación de persistencia con volumen, según `docs/DEPLOY_EASYPANEL.md`;
-- validación final del CI y la instancia publicada.
+- autenticación de la API mediante tokens Bearer;
+- archivos adjuntos mediante Active Storage;
+- notificaciones Action Mailer de transferencias cuando se configura SMTP;
+- controles RuboCop y Brakeman en CI;
+- pruebas automatizadas adicionales.
 
-La rama de finalización incorpora autenticación por token, adjuntos de Active Storage, Action Mailer para transferencias cuando se configure SMTP, análisis RuboCop/Brakeman en CI y tests nuevos. El deploy operativo requiere credenciales e infraestructura externa y no se declara realizado hasta su verificación.
+## Despliegue de demostración (octubre de 2026)
+
+La aplicación fue desplegada en una instancia independiente de Easypanel, con PostgreSQL exclusivo. Se confirmó el acceso a la pantalla de login en producción y la creación de un usuario administrador mediante Rails console. Las credenciales y el dominio de la instancia se gestionan fuera del repositorio. Consultar `docs/DEPLOY_EASYPANEL.md` para los pasos de instalación.
+
+**Verificaciones pendientes antes de dar por validada la instancia:** comprobar que `/app/storage` utiliza un volumen persistente y que los archivos adjuntos sobreviven a un redeploy; probar subida y descarga; confirmar `GET /up`, API autenticada y el resultado vigente de CI. El despliegue operativo no implica por sí solo que estas verificaciones se hayan completado.
+
+**Datos de demostración:** los seeds de desarrollo contienen usuarios ficticios y contraseñas conocidas; no ejecutarlos en producción sin revisar su finalidad. Cualquier expediente judicial simulado debe identificarse expresamente como académico y no representar actuaciones reales.
