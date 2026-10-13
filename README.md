@@ -1,6 +1,6 @@
 # Digital Custody
 
-Digital Custody es una aplicación web académica para registrar casos de análisis informático, administrar evidencias digitales y mantener una cadena de custodia trazable.
+Digital Custody es una aplicación web para registrar casos de análisis informático, administrar evidencias digitales y mantener una cadena de custodia trazable.
 
 ## Problema que resuelve
 
@@ -88,9 +88,8 @@ bundle exec rails test
 
 Los tests principales cubren validaciones únicas, autenticación administrativa, registro inicial y las reglas transaccionales de transferencia de custodia.
 
-## Estado del proyecto
+## Funcionalidades
 
-Implementado:
 
 - modelos y migraciones PostgreSQL;
 - autenticación administrativa mediante sesión;
@@ -103,7 +102,7 @@ Implementado:
 - tests principales;
 - API JSON de consulta para casos y evidencias con autenticación Bearer.
 
-Funcionalidades incorporadas en la finalización:
+Además, incluye:
 
 - autenticación de la API mediante tokens Bearer;
 - archivos adjuntos mediante Active Storage;
@@ -111,10 +110,6 @@ Funcionalidades incorporadas en la finalización:
 - controles RuboCop y Brakeman en CI;
 - pruebas automatizadas adicionales.
 
-## Despliegue de demostración (octubre de 2026)
+## Despliegue
 
-La aplicación fue desplegada en una instancia independiente de Easypanel, con PostgreSQL exclusivo. Se confirmó el acceso a la pantalla de login en producción y la creación de un usuario administrador mediante Rails console. El correo del administrador de demostración es `admin@digitalcustody.com.ar`. **Su contraseña no se publica en GitHub**: se configura de manera privada, debe rotarse si ha sido compartida y no debe incluirse en README, seeds ni historial de commits. El dominio de la instancia se gestiona fuera del repositorio. Consultar `docs/DEPLOY_EASYPANEL.md` para los pasos de instalación.
-
-**Verificaciones pendientes antes de dar por validada la instancia:** comprobar que `/app/storage` utiliza un volumen persistente y que los archivos adjuntos sobreviven a un redeploy; probar subida y descarga; confirmar `GET /up`, API autenticada y el resultado vigente de CI. El despliegue operativo no implica por sí solo que estas verificaciones se hayan completado.
-
-**Datos de demostración:** los seeds de desarrollo contienen usuarios ficticios y contraseñas conocidas; no ejecutarlos en producción sin revisar su finalidad. Cualquier expediente judicial simulado debe identificarse expresamente como académico y no representar actuaciones reales.
+La aplicación se encuentra desplegada en Easypanel con una base de datos PostgreSQL independiente. Para configurar una nueva instancia, consultar [`docs/DEPLOY_EASYPANEL.md`](docs/DEPLOY_EASYPANEL.md).
