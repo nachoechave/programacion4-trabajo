@@ -122,7 +122,7 @@ Funcionalidades incorporadas en la finalización:
 
 ## Despliegue de demostración (octubre de 2026)
 
-La aplicación fue desplegada en una instancia independiente de Easypanel, con PostgreSQL exclusivo. Se confirmó el acceso a la pantalla de login en producción y la creación de un usuario administrador mediante Rails console. Las credenciales y el dominio de la instancia se gestionan fuera del repositorio. Consultar `docs/DEPLOY_EASYPANEL.md` para los pasos de instalación.
+La aplicación fue desplegada en una instancia independiente de Easypanel, con PostgreSQL exclusivo. Se confirmó el acceso a la pantalla de login en producción y la creación de un usuario administrador mediante Rails console. El correo del administrador de demostración es `admin@digitalcustody.com.ar`. **Su contraseña no se publica en GitHub**: se configura de manera privada, debe rotarse si ha sido compartida y no debe incluirse en README, seeds ni historial de commits. El dominio de la instancia se gestiona fuera del repositorio. Consultar `docs/DEPLOY_EASYPANEL.md` para los pasos de instalación.
 
 **Verificaciones pendientes antes de dar por validada la instancia:** comprobar que `/app/storage` utiliza un volumen persistente y que los archivos adjuntos sobreviven a un redeploy; probar subida y descarga; confirmar `GET /up`, API autenticada y el resultado vigente de CI. El despliegue operativo no implica por sí solo que estas verificaciones se hayan completado.
 
