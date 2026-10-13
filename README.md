@@ -64,15 +64,6 @@ bundle exec rails server
 
 Abrir `http://localhost:3000/admin/login`.
 
-## Credenciales de demostración
-
-- Administrador: `admin@example.com`
-- Contraseña: `password123`
-- Analistas: `juan@example.com` y `maria@example.com`
-- Contraseña de analistas: `password123`
-
-Estas credenciales son únicamente para desarrollo y demostración.
-
 ## Rutas principales
 
 | Ruta | Función |
