@@ -58,12 +58,12 @@ class ApiAuthenticationTest < ActionDispatch::IntegrationTest
 
     post "/api/v1/cases",
          params: { case: { code: "TP2-CASE-001", title: "Investigación integrada", opened_at: "2026-11-18", status: "open" } },
-         headers:, as: :json
+         headers: headers, as: :json
     assert_response :created
     id = response.parsed_body.fetch("id")
     assert_equal "TP2-CASE-001", Case.find(id).code
 
-    get "/api/v1/cases", headers:
+    get "/api/v1/cases", headers: headers
     assert_response :success
     assert response.parsed_body.any? { |record| record["id"] == id }
   end
