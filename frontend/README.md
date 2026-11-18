@@ -54,6 +54,9 @@ npm run build
 ```
 Los archivos compilados quedan en `dist/digital-custody/browser` (según configuración del builder).
 
+## Pruebas automatizadas de interfaz
+Las pruebas Playwright ejecutan Angular en un navegador Chromium y simulan la API para comprobar login, alta de casos, persistencia visual y manejo de errores HTTP. No sustituyen la demostración con Rails y PostgreSQL reales. Ejecutar `npx playwright install chromium` antes de `npm test`.
+
 ## Producción / Easypanel
 Publicar el frontend como sitio estático y enrutar `/api/*` al servicio Rails. Es indispensable mantener la misma procedencia (dominio) o configurar CORS restringido al origen del frontend. Configurar fallback de rutas a `index.html` y HTTPS. No exponer claves de base de datos ni secretos Rails en Angular. El dominio `tp4.comercioflex.com.ar` es el destino previsto, no un deploy ya realizado.
 
@@ -70,5 +73,5 @@ Publicar el frontend como sitio estático y enrutar `/api/*` al servicio Rails. 
 bundle exec rails test
 bundle exec rubocop
 bundle exec brakeman
-cd frontend && npm install && npm run build
+cd frontend && npm install && npm run build && npm test
 ```
