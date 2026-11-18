@@ -52,4 +52,31 @@ class ApiAuthenticationTest < ActionDispatch::IntegrationTest
     get "/api/v1/cases", headers: { "Authorization" => "Bearer #{token}" }
     assert_response :unauthorized
   end
+  test "admin creates a case through JSON API and can read it back" do
+    token = ApiToken.issue!(user: @admin)
+    headers = { "Authorization" => "Bearer #{token}" }
+
+    post "/api/v1/cases",
+         params: { case: { code: "TP2-CASE-001", title: "Investigación integrada", opened_at: "2026-11-18", status: "open" } },
+         headers:, as: :json
+    assert_response :created
+    id = response.parsed_body.fetch("id")
+    assert_equal "TP2-CASE-001", Case.find(id).code
+
+    get "/api/v1/cases", headers:
+    assert_response :success
+    assert response.parsed_body.any? { |record| record["id"] == id }
+  end
+
+  test "duplicate case code returns validation errors" do
+    Case.create!(code: "TP2-DUPLICATE", title: "Existente", opened_at: Time.current)
+    token = ApiToken.issue!(user: @admin)
+
+    post "/api/v1/cases",
+         params: { case: { code: "TP2-DUPLICATE", title: "Duplicado", opened_at: "2026-11-18" } },
+         headers: { "Authorization" => "Bearer #{token}" }, as: :json
+    assert_response :unprocessable_entity
+    assert response.parsed_body.fetch("errors").any?
+  end
+
 end
