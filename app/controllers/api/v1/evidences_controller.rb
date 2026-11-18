@@ -2,16 +2,20 @@ module Api
   module V1
     class EvidencesController < BaseController
       def index
-        evidences = Evidence.includes(:case, :evidence_type, :current_custodian).order(:code)
+        evidences = accessible_evidences.includes(:case, :evidence_type, :current_custodian).order(:code)
         render json: evidences.map { |evidence| serialize(evidence) }
       end
 
       def show
-        evidence = Evidence.includes(:case, :evidence_type, :current_custodian).find(params[:id])
+        evidence = accessible_evidences.includes(:case, :evidence_type, :current_custodian).find(params[:id])
         render json: serialize(evidence)
       end
 
       private
+
+      def accessible_evidences
+        current_api_user.admin? ? Evidence.all : Evidence.where(case_id: current_api_user.assigned_cases.select(:id))
+      end
 
       def serialize(evidence)
         {
