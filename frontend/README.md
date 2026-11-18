@@ -58,7 +58,10 @@ Los archivos compilados quedan en `dist/digital-custody/browser` (según configu
 Las pruebas Playwright ejecutan Angular en un navegador Chromium y simulan la API para comprobar login, alta de casos, persistencia visual y manejo de errores HTTP. No sustituyen la demostración con Rails y PostgreSQL reales. Ejecutar `npx playwright install chromium` antes de `npm test`.
 
 ## Producción / Easypanel
-Publicar el frontend como sitio estático y enrutar `/api/*` al servicio Rails. Es indispensable mantener la misma procedencia (dominio) o configurar CORS restringido al origen del frontend. Configurar fallback de rutas a `index.html` y HTTPS. No exponer claves de base de datos ni secretos Rails en Angular. El dominio `tp4.comercioflex.com.ar` es el destino previsto, no un deploy ya realizado.
+El directorio `frontend/` incluye un Dockerfile multietapa y Caddy para servir Angular y reenviar `/api/*` a Rails por la red interna. En Easypanel crear un servicio Docker con contexto `frontend/`, puerto interno `80`, dominio `tp4.comercioflex.com.ar` y variable `RAILS_UPSTREAM=http://NOMBRE_SERVICIO_RAILS:3000` (usar el nombre real accesible desde la red del frontend). Configurar HTTPS en Easypanel. Caddy resuelve el fallback SPA a `index.html` y mantiene la API bajo el mismo origen, evitando CORS. **No exponer** PostgreSQL ni secretos Rails en Angular. Comprobar que Rails acepta el host reenviado y el proxy interno. El dominio es el destino previsto, **no** un despliegue ya realizado.
+
+### Seguridad de datos demo
+`db/seeds.rb` incluye credenciales de demostración públicas. **Nunca** ejecutar seeds de demo en producción ni reutilizar sus contraseñas. En un entorno de evaluación aislado, usar usuarios específicos con contraseñas nuevas y permisos mínimos.
 
 ## Demostración de entrega
 1. Ingresar con un usuario administrador creado mediante seeds (consultar `db/seeds.rb`; nunca publicar contraseñas reales).
