@@ -65,7 +65,7 @@ class ApiAuthenticationTest < ActionDispatch::IntegrationTest
 
     get "/api/v1/cases", headers: headers
     assert_response :success
-    assert response.parsed_body.any? { |record| record["id"] == id }
+    assert(response.parsed_body.any? { |record| record["id"] == id })
   end
 
   test "duplicate case code returns validation errors" do
