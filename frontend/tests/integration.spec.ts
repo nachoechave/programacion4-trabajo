@@ -48,7 +48,7 @@ test('login, creación persistente y consulta del historial',async ({page})=>{
   await expect(page.getByText('Investigación nueva')).toBeVisible();
   await page.getByRole('button',{name:/Evidencias/}).click();
   await page.getByRole('button',{name:/Ver historial/}).click();
-  await expect(page.getByText('Registro inicial')).toBeVisible();
+  await expect(page.getByText('Registro inicial',{exact:true})).toBeVisible();
   await page.getByRole('button',{name:/Cerrar sesión/}).click();
   await expect(page.getByRole('heading',{name:'Bienvenido'})).toBeVisible();
 });
