@@ -2,7 +2,7 @@ module Api
   module V1
     class CustodyMovementsController < BaseController
       def index
-        evidence = Evidence.find(params[:evidence_id])
+        evidence = accessible_evidences.find(params[:evidence_id])
         movements = evidence.custody_movements
                             .includes(:from_user, :to_user, :performed_by)
                             .order(:transferred_at, :id)
@@ -14,6 +14,10 @@ module Api
       end
 
       private
+
+      def accessible_evidences
+        current_api_user.admin? ? Evidence.all : Evidence.where(case_id: current_api_user.assigned_cases.select(:id))
+      end
 
       def serialize(movement)
         {
