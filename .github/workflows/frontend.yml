@@ -36,6 +36,11 @@ jobs:
       PGHOST: 127.0.0.1
       PGUSER: postgres
       PGPASSWORD: postgres
+      DB_HOST: 127.0.0.1
+      DB_PORT: 5432
+      DB_NAME: digital_custody_development
+      DB_USER: postgres
+      DB_PASSWORD: postgres
       REAL_API: '1'
     services:
       postgres:
