@@ -1,4 +1,4 @@
-FROM ruby:3.3.12-slim
+FROM ruby:3.3.14-slim
 
 RUN apt-get update -qq && \
     apt-get install --no-install-recommends -y build-essential libpq-dev libyaml-dev && \

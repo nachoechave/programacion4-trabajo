@@ -19,6 +19,14 @@ class ApiAuthenticationTest < ActionDispatch::IntegrationTest
     assert_response :success
   end
 
+  test "profile reports authenticated role without credentials" do
+    token = ApiToken.issue!(user: @analyst)
+    get "/api/v1/me", headers: { "Authorization" => "Bearer #{token}" }
+    assert_response :success
+    assert_equal "analyst", response.parsed_body.fetch("role")
+    assert_equal %w[id name role].sort, response.parsed_body.keys.sort
+  end
+
   test "incorrect password is rejected" do
     post "/api/v1/login", params: { email: @admin.email, password: "incorrect" }, as: :json
     assert_response :unauthorized

@@ -13,6 +13,10 @@ module Api
         render json: { token: token, token_type: "Bearer", expires_in: 24.hours.to_i }, status: :created
       end
 
+      def show
+        render json: current_api_user.as_json(only: %i[id name role])
+      end
+
       def destroy
         @api_token.destroy!
         head :no_content
