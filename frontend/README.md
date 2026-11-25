@@ -35,6 +35,7 @@ Abrir http://localhost:4200. El proxy Angular redirige `/api` a Rails en localho
 | Método | Ruta | Permisos | Respuesta |
 | --- | --- | --- | --- |
 | POST | /api/v1/login | Público | 201: token, token_type, expires_in |
+| GET | /api/v1/me | Bearer | 200: id, name, role (`admin` o `analyst`) |
 | DELETE | /api/v1/logout | Bearer | 204 |
 | GET | /api/v1/cases | Bearer | 200: lista de casos |
 | POST | /api/v1/cases | Bearer, admin | 201: caso; 422: errors |
@@ -78,3 +79,6 @@ bundle exec rubocop
 bundle exec brakeman
 cd frontend && npm install && npm run build && npm test
 ```
+
+### Integración con API real
+En una base local aislada con seeds, iniciar Rails en 3000 y ejecutar `REAL_API=1 npx playwright test real-api.spec.ts` desde frontend. La prueba crea un caso con código único, recarga, verifica persistencia y el error 422, consulta historial y cierra sesión. Nunca ejecutar contra producción. El CI real-api prepara PostgreSQL 16 y Rails. En producción configurar `ADDITIONAL_APP_HOSTS=tp4.comercioflex.com.ar` en Rails si se conserva un APP_HOST administrativo distinto. Ver [guía TP2](../docs/DEPLOY_TP2.md).

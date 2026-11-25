@@ -27,5 +27,9 @@ Rails.application.configure do
     config.hosts << ENV["APP_HOST"]
   end
 
+  ENV.fetch("ADDITIONAL_APP_HOSTS", "").split(",").map(&:strip).reject(&:empty?).each do |host|
+    config.hosts << host
+  end
+
   config.host_authorization = { exclude: ->(request) { request.path == "/up" } }
 end

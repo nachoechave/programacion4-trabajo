@@ -6,7 +6,7 @@ const cases = [
 const evidences = [
   {id:2,code:'EVD-001',name:'Disco SSD',description:'Imagen forense',status:'under_analysis',collected_at:'2026-11-18',location:'Laboratorio',case:{id:1,code:'CAS-001',title:'Incidente de seguridad'},evidence_type:{id:1,name:'SSD'},current_custodian:{id:1,name:'Juan',email:'juan@example.com'}}
 ];
-async function mockApi(page:Page, opts:{createError?:boolean;loginError?:boolean}={}) {
+async function mockApi(page:Page, opts:{createError?:boolean;loginError?:boolean;role?:'admin'|'analyst'}={}) {
   const records=cases.map(c=>({...c}));
   await page.route('**/api/v1/**', async route=>{
     const request=route.request();
@@ -14,6 +14,7 @@ async function mockApi(page:Page, opts:{createError?:boolean;loginError?:boolean
     const method=request.method();
     const json=(status:number,body:unknown)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(body)});
     if(path==='/api/v1/login'&&method==='POST')return json(opts.loginError?401:201,opts.loginError?{error:'Credenciales inválidas'}:{token:'test-token',token_type:'Bearer',expires_in:86400});
+    if(path==='/api/v1/me')return json(200,{id:1,name:'Usuario demo',role:opts.role||'admin'});
     if(path==='/api/v1/logout'&&method==='DELETE')return route.fulfill({status:204,body:''});
     if(path==='/api/v1/cases'&&method==='GET')return json(200,records);
     if(path==='/api/v1/evidences'&&method==='GET')return json(200,evidences);
@@ -72,4 +73,12 @@ test('rechazo de credenciales muestra error',async ({page})=>{
   await page.getByRole('button',{name:/Iniciar sesión/}).click();
   await expect(page.getByRole('alert')).toContainText('Credenciales inválidas');
   await expect(page.getByRole('heading',{name:'Bienvenido'})).toBeVisible();
+});
+
+test('analista no ve controles de alta',async ({page})=>{
+  await mockApi(page,{role:'analyst'});
+  await page.goto('/');
+  await login(page);
+  await page.getByRole('button',{name:/Investigaciones/}).click();
+  await expect(page.getByRole('button',{name:/Nuevo caso/})).toHaveCount(0);
 });

@@ -2,6 +2,10 @@
 
 Digital Custody es una aplicación web para registrar casos de análisis informático, administrar evidencias digitales y mantener una cadena de custodia trazable.
 
+## Entrega TP1 + TP2 — Programación IV
+
+Autor del backend original y frontend: Ignacio Echave. Modalidad individual (confirmar en la entrega). El frontend de usuario final utiliza Angular 20.3 y Node.js 22, en `frontend/`; Rails conserva el back-office ERB en `/admin`. Ambos se entregan en este repositorio. Consultar [frontend/README.md](frontend/README.md) para instalación de ambos servicios, contrato de API, pruebas y demostración; [despliegue TP2](docs/DEPLOY_TP2.md) para publicación. El dominio previsto del frontend es `tp4.comercioflex.com.ar`, no verificado como publicado.
+
 ## Problema que resuelve
 
 En una investigación informática es necesario conocer qué evidencia existe, a qué caso pertenece, quién es su custodio actual y conservar el historial completo de transferencias. La aplicación registra cada cambio de custodia como un movimiento auditable que no puede editarse ni eliminarse desde el back-office.

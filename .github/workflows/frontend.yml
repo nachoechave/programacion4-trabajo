@@ -2,10 +2,16 @@ name: TP2 Angular CI
 on:
   push:
     paths:
+      - 'app/**'
+      - 'config/**'
+      - 'db/**'
       - 'frontend/**'
       - '.github/workflows/frontend.yml'
   pull_request:
     paths:
+      - 'app/**'
+      - 'config/**'
+      - 'db/**'
       - 'frontend/**'
       - '.github/workflows/frontend.yml'
 jobs:
@@ -23,3 +29,49 @@ jobs:
       - run: npm run build
       - run: npx playwright install --with-deps chromium
       - run: npm test
+  real-api:
+    runs-on: ubuntu-latest
+    env:
+      RAILS_ENV: development
+      PGHOST: 127.0.0.1
+      PGUSER: postgres
+      PGPASSWORD: postgres
+      REAL_API: '1'
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_PASSWORD: postgres
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U postgres"
+          --health-interval 5s
+          --health-timeout 5s
+          --health-retries 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: bundle exec rails db:prepare db:seed
+      - name: Start Rails
+        run: |
+          bundle exec rails server -b 127.0.0.1 -p 3000 > /tmp/rails.log 2>&1 &
+          for i in $(seq 1 60); do
+            if curl -fsS http://127.0.0.1:3000/up; then exit 0; fi
+            sleep 1
+          done
+          cat /tmp/rails.log
+          exit 1
+      - working-directory: frontend
+        run: npm install --no-audit --no-fund
+      - working-directory: frontend
+        run: npx playwright install --with-deps chromium
+      - working-directory: frontend
+        run: npx playwright test real-api.spec.ts
+      - if: failure()
+        run: cat /tmp/rails.log || true
